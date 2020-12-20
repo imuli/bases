@@ -1,0 +1,36 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.34.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           bases
+version:        0.1.0.0
+synopsis:       encodings and decodings for various bases
+homepage:       https://github.com/imuli/bases#readme
+bug-reports:    https://github.com/imuli/bases/issues
+maintainer:     Imuli <i@imu.li>
+license:        NONE
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/imuli/bases
+
+library
+  exposed-modules:
+      Data.Encoding.Base16
+      Data.Encoding.Base41
+      Data.Encoding.Base64
+      Data.Encoding.Endian
+      Data.Encoding.Fixed
+  other-modules:
+      Paths_bases
+  hs-source-dirs:
+      ./.
+  ghc-options: -Wall
+  build-depends:
+      base
+    , bytestring
+    , vector
+  default-language: Haskell2010

@@ -1,0 +1,16 @@
+name: bases
+version: 0.1.0.0
+synopsis: encodings and decodings for various bases
+maintainer: Imuli <i@imu.li>
+github: imuli/bases
+license: NONE
+
+ghc-options: -Wall
+
+dependencies:
+  - base
+  - bytestring
+  - vector
+
+library:
+  source-dirs: .
