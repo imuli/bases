@@ -1,22 +1,22 @@
 {-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Data.Encoding.Base16
-  ( base16Encode
+  ( encode16
   ) where
 
-import Data.Encoding.Fixed
-import Data.Encoding.Endian
+import           Data.Encoding.Endian
+import           Data.Encoding.Fixed
 
-import Data.Bits (shiftL, (.|.), (.&.), unsafeShiftR)
-import Data.Word (Word32, Word16, Word8)
-import Data.ByteString (ByteString, index)
-import Data.Vector.Unboxed (Vector, generate, unsafeIndex)
+import           Data.Bits (shiftL, unsafeShiftR, (.&.), (.|.))
+import           Data.ByteString (ByteString, index)
+import           Data.Vector.Unboxed (Vector, generate, unsafeIndex)
+import           Data.Word (Word16, Word32, Word8)
 
-import Foreign.Ptr (Ptr, castPtr, plusPtr)
-import Foreign.Storable (peek, poke)
+import           Foreign.Ptr (Ptr, castPtr, plusPtr)
+import           Foreign.Storable (peek, poke)
 
 base16 :: ByteString
 base16 = "0123456789abcdef"
@@ -50,8 +50,8 @@ enc16w !src !dst = do
 {-# INLINE enc16w #-}
 
 fin16w :: Int -> Int -> Ptr Word8 -> Ptr Word8 -> IO Int
-fin16w !n 0 _ _ = pure (2*n)
+fin16w !n 0 _ _        = pure (2*n)
 fin16w !n !x !src !dst = enc16 src dst *> fin16w (n+1) (x-1) (plusPtr src 1) (plusPtr dst 2)
 
-base16Encode :: ByteString -> ByteString
-base16Encode bs = mapChunks 2 4 enc16w (fin16w 0) bs
+encode16 :: ByteString -> ByteString
+encode16 bs = mapChunks 2 4 enc16w (fin16w 0) bs
